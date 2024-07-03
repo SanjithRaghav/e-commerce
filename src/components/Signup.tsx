@@ -2,7 +2,9 @@ import './login.css'
 import cartImage from '../assets/card.png' 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSignupMutation } from '../api'
 export const Signup=()=>{
+    const [signup, { isLoading, error }]  = useSignupMutation()
     const navigate=useNavigate()
     const [page,setPage]=useState(1)
     const [data,setData]=useState({
@@ -16,14 +18,19 @@ export const Signup=()=>{
             }
         })
     }
-    const handleSubmit=(e:FormEvent<HTMLFormElement>)=>{
+    const handleSubmit=async (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         console.log(data)
         if(page==1){
             setPage(2)
         }
         else{
-           //submit logic
+            
+        const response=await signup(data).unwrap()
+        console.log(response)
+        if(!isLoading && !error){
+            navigate('/login')
+        }
         }
 
     }
@@ -51,7 +58,7 @@ export const Signup=()=>{
                         {(page==2) && ( <>
                          <input onChange={handleChange} type="text" name="Address" placeholder="Address" />
                             <input onChange={handleChange} type="text" name="City" placeholder="City" />
-                            <input onChange={handleChange} type="email" name="State" placeholder="State" />
+                            <input onChange={handleChange} type="text" name="State" placeholder="State" />
                             <input onChange={handleChange} type="text" name="country" placeholder="country" />
                             <input onChange={handleChange} type="text" name="ZipCode" placeholder="ZipCode" />
                             <input onChange={handleChange} type="number" name="Phone" placeholder="Phone" />
@@ -61,6 +68,7 @@ export const Signup=()=>{
                             </div>
                             </>
                         )}
+
                             
                             <p className="login-link">Already have an account? <a onClick={()=>{navigate('/login')}}>Log in</a></p>
                         </form>
