@@ -15,6 +15,7 @@ export const Dashboard=()=>{
     const [limit,setLimit]=useState(12)
     const navigate=useNavigate()
     const { data: products, error, isLoading } = useProdDataQuery(limit);
+    console.log(limit)
     // console.log(limit)
     if(error){
         console.log(error)

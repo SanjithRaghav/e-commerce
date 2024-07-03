@@ -9,7 +9,7 @@ export const Products=({setLimit,limit}:{setLimit: React.Dispatch<React.SetState
         // console.log(node)
         if(observer.current) observer.current.disconnect()
         observer.current=new IntersectionObserver(entries=>{
-            if(entries[0].isIntersecting && limit)
+            if(entries[0].isIntersecting && limit<20)
                setLimit((limit)=>(limit+3))
         })
         if(node)
@@ -18,9 +18,10 @@ export const Products=({setLimit,limit}:{setLimit: React.Dispatch<React.SetState
 
 
     const data:product[]=useSelector((state:any)=>(state.productState.filteredProducts))
-    if(data.length<12 && limit<20){
-        setLimit((limit)=>(limit+3))
-    }
+    // if(data.length<12 && limit<20){
+    //     console.log("hello")
+    //     setLimit((limit)=>(limit+3))
+    // }
     const cards=data.map((p,i)=>{
         if(i==data.length-1)
             return (
