@@ -1,7 +1,18 @@
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import './navbar.css'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { searchFilterProducts } from '../slice/productSlice'
 export const Navbar=()=>{
+    const dispatch=useDispatch()
+    const [search,setSearch]=useState('')
+    const handleChange=(e:ChangeEvent<HTMLInputElement>)=>{
+        setSearch(e.target.value)
+    }
+    useEffect(()=>{
+        dispatch(searchFilterProducts(search))
+    },[search])
+    
     const location=useLocation()
     const [active,setActive]=useState(location.pathname=='/'?'home':location.pathname=='/Login'?'signup':location.pathname.slice(1))
     const activeStyle={
@@ -29,7 +40,7 @@ export const Navbar=()=>{
                     <p onClick={()=>{setActive('signup'); navigate('/signup')}}  style={active=="signup" ? activeStyle:{}}>Sign Up</p>
                 </div>
                 <div className='search'>
-                    <input placeholder='What are you looking for' type='text'/>      
+                    <input onChange={handleChange} placeholder='What are you looking for' type='text'/>      
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>

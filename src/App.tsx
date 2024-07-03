@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar"
 import { Signup } from "./components/Signup"
 import { Login } from "./components/Login"
 import Footer from "./components/Footer"
+import { Dashboard } from "./components/Dashboard"
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <>
     <Navbar/>
       <Routes>
-        <Route element={<h1></h1>} path="/" />
+        <Route element={<Dashboard/>} path="/" />
         <Route element={<h1>hola</h1>} path="/register" />
         <Route element={<Signup/>} path="/signup" />
         <Route element={<Login/>} path="/login" />
